@@ -253,7 +253,8 @@ emotion_map = {
 idx_to_interest = {idx: emotion_map[idx_to_emotion[idx]] for idx in idx_to_emotion.keys()}
 
 # Haar cascade
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+face_cascade = cv2.CascadeClassifier("model/haarcascade_frontalface_default.xml")
+
 
 # Transform
 transform = transforms.Compose([
