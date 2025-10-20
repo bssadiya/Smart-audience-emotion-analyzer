@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Emotion / Interest Detection</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        #video-container {
+            display: inline-block;
+            margin-top: 20px;
+            border: 2px solid #ccc;
+            padding: 10px;
+            background-color: #fff;
+        }
+        #results {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid #888;
+        }
+        button:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <h1>😊 Live Emotion / Interest Detection</h1>
+
+    <div id="video-container">
+        <img id="video_feed" src="" width="640" height="480">
+    </div>
+
+    <div>
+        <button id="startBtn">Start Camera</button>
+        <button id="stopBtn">Stop & Get Results</button>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        const video = document.getElementById("video_feed");
+        const resultsDiv = document.getElementById("results");
+
+        document.getElementById("startBtn").addEventListener("click", function() {
+            fetch('/start', { method: 'POST' })
+                .then(resp => resp.json())
+                .then(() => {
+                    video.src = "/video_feed";
+                    resultsDiv.innerHTML = "";
+                });
+        });
+
+        document.getElementById("stopBtn").addEventListener("click", function() {
+            fetch('/stop', { method: 'POST' })
+                .then(resp => resp.json())
+                .then(data => {
+                    video.src = "";
+                    resultsDiv.innerHTML = `
+                        📊 <b>Overall Summary:</b><br>
+                        Interested: ${data.Interested}<br>
+                        Not Interested: ${data['Not Interested']}
+                    `;
+                });
+        });
+    </script>
+</body>
+</html>
