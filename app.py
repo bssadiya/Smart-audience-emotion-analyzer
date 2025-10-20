@@ -250,11 +250,12 @@ emotion_map = {
 }
 idx_to_interest = {idx: emotion_map[idx_to_emotion[idx]] for idx in idx_to_emotion.keys()}
 
+import os
 # Haar cascade
-face_cascade = cv2.CascadeClassifier("model/haarcascade_frontalface_default.xml")
+haarcascade_path = os.path.join("model", "haarcascade_frontalface_default.xml")
+face_cascade = cv2.CascadeClassifier(haarcascade_path)
 if face_cascade.empty():
     st.error("❌ Haar cascade XML file not found in model/ folder!")
-
 # Transform
 transform = transforms.Compose([
     transforms.Resize((128,128)),
