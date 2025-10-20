@@ -184,9 +184,6 @@
 #     st.info(f"Interested: {interested_pct:.2f}%")
 #     st.warning(f"Not Interested: {not_interested_pct:.2f}%")
 #     st.session_state.face_track = {}
-# ===============================
-# app.py
-# ===============================
 import streamlit as st
 import cv2
 import torch
@@ -194,7 +191,7 @@ import torch.nn as nn
 from torchvision import transforms
 from PIL import Image
 from collections import Counter
-from streamlit_webrtc import webrtc_streamer, VideoTransformerBase, ClientSettings
+from streamlit_webrtc import webrtc_streamer, VideoTransformerBase
 
 # =========================
 # CNN Model Definition
@@ -314,9 +311,7 @@ class EmotionTransformer(VideoTransformerBase):
 webrtc_streamer(
     key="emotion-stream",
     video_transformer_factory=EmotionTransformer,
-    client_settings=ClientSettings(
-        media_stream_constraints={"video": True, "audio": False}
-    )
+    media_stream_constraints={"video": True, "audio": False}
 )
 
 # =========================
