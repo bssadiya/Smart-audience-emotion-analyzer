@@ -1,0 +1,18 @@
+# Python cache files
+__pycache__/
+*.pyc
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs
+*.csv
+
+# Dataset / images (not needed for deployment)
+images/
+
+# Training scripts (optional if not needed on deployment)
+train_model.py
+
+# VS Code settings (optional)
+.vscode/
