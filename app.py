@@ -329,7 +329,7 @@ webrtc_streamer(
 )
 
 # =========================
-# Display Dynamic Summary
+# Display Dynamic Summary after Stop
 # =========================
 if not st.session_state.running and st.session_state.face_track:
     counts = Counter(st.session_state.face_track.values())
