@@ -184,9 +184,7 @@
 #     st.info(f"Interested: {interested_pct:.2f}%")
 #     st.warning(f"Not Interested: {not_interested_pct:.2f}%")
 #     st.session_state.face_track = {}
-# ===============================
-# app.py
-# ===============================
+
 import streamlit as st
 import cv2
 import torch
@@ -254,7 +252,8 @@ idx_to_interest = {idx: emotion_map[idx_to_emotion[idx]] for idx in idx_to_emoti
 
 # Haar cascade
 face_cascade = cv2.CascadeClassifier("model/haarcascade_frontalface_default.xml")
-
+if face_cascade.empty():
+    st.error("❌ Haar cascade XML file not found in model/ folder!")
 
 # Transform
 transform = transforms.Compose([
@@ -271,11 +270,21 @@ st.title("😊 Live Emotion / Interest Detection")
 # Initialize session state
 if "face_track" not in st.session_state:
     st.session_state.face_track = {}
+if "running" not in st.session_state:
+    st.session_state.running = False
 
-# Reset Summary Button
-if st.button("Reset Summary"):
-    st.session_state.face_track = {}
-    st.success("✅ Summary reset!")
+# Start / Stop buttons
+col1, col2, col3 = st.columns([1,1,1])
+with col1:
+    if st.button("Start Webcam"):
+        st.session_state.running = True
+with col2:
+    if st.button("Stop Webcam"):
+        st.session_state.running = False
+with col3:
+    if st.button("Reset Summary"):
+        st.session_state.face_track = {}
+        st.success("✅ Summary reset!")
 
 # =========================
 # WebRTC Video Transformer
@@ -309,7 +318,6 @@ class EmotionTransformer(VideoTransformerBase):
             cv2.rectangle(img, (x,y), (x+w, y+h), color, 2)
             cv2.putText(img, f"{emotion_label} | {interest_label}", (x, y-10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
-
         return img
 
 # =========================
@@ -323,12 +331,12 @@ webrtc_streamer(
 # =========================
 # Display Dynamic Summary
 # =========================
-if st.session_state.face_track:
+if not st.session_state.running and st.session_state.face_track:
     counts = Counter(st.session_state.face_track.values())
     total_people = sum(counts.values())
     interested_pct = counts.get('Interested',0) / total_people * 100
     not_interested_pct = counts.get('Not Interested',0) / total_people * 100
 
-    st.success("📊 Overall Summary:")
+    st.success("📊 Overall Summary (after stopping):")
     st.info(f"Interested: {interested_pct:.2f}%")
     st.warning(f"Not Interested: {not_interested_pct:.2f}%")
