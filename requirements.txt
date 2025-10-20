@@ -2,6 +2,6 @@ streamlit==1.30.0
 torch==2.0.1
 torchvision==0.15.2
 numpy==1.26.0
-opencv-python-headless==4.12.0
+opencv-python-headless==4.11.0.86
 Pillow==10.0.0
 matplotlib==3.8.0
