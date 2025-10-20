@@ -184,6 +184,9 @@
 #     st.info(f"Interested: {interested_pct:.2f}%")
 #     st.warning(f"Not Interested: {not_interested_pct:.2f}%")
 #     st.session_state.face_track = {}
+# ===============================
+# app.py
+# ===============================
 import streamlit as st
 import cv2
 import torch
@@ -264,6 +267,7 @@ transform = transforms.Compose([
 # =========================
 st.title("😊 Live Emotion / Interest Detection")
 
+# Initialize session state
 if "face_track" not in st.session_state:
     st.session_state.face_track = {}
 
@@ -295,9 +299,11 @@ class EmotionTransformer(VideoTransformerBase):
                 emotion_label = idx_to_emotion[pred]
                 interest_label = idx_to_interest[pred]
 
+            # Track each face dynamically
             st.session_state.face_track[self.face_id] = interest_label
             self.face_id += 1
 
+            # Draw rectangle + labels
             color = (0,255,0) if interest_label=="Interested" else (0,0,255)
             cv2.rectangle(img, (x,y), (x+w, y+h), color, 2)
             cv2.putText(img, f"{emotion_label} | {interest_label}", (x, y-10),
@@ -311,11 +317,10 @@ class EmotionTransformer(VideoTransformerBase):
 webrtc_streamer(
     key="emotion-stream",
     video_transformer_factory=EmotionTransformer,
-    media_stream_constraints={"video": True, "audio": False}
 )
 
 # =========================
-# Display Summary
+# Display Dynamic Summary
 # =========================
 if st.session_state.face_track:
     counts = Counter(st.session_state.face_track.values())
@@ -323,6 +328,6 @@ if st.session_state.face_track:
     interested_pct = counts.get('Interested',0) / total_people * 100
     not_interested_pct = counts.get('Not Interested',0) / total_people * 100
 
-    st.success(f"📊 Overall Summary:")
+    st.success("📊 Overall Summary:")
     st.info(f"Interested: {interested_pct:.2f}%")
     st.warning(f"Not Interested: {not_interested_pct:.2f}%")
