@@ -9,7 +9,7 @@ import numpy as np
 import time
 import os
 
-# ------------------- Model Definition -------------------
+#  Model Definition
 class EmotionCNN(nn.Module):
     def __init__(self, num_classes=7):
         super(EmotionCNN, self).__init__()
@@ -36,7 +36,7 @@ class EmotionCNN(nn.Module):
         x = self.classifier(x)
         return x
 
-# ------------------- Setup -------------------
+#  Setup 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_classes = 7
 model_path = "model/emotion_cnn.pth"  # your trained model path
@@ -58,7 +58,7 @@ transform = transforms.Compose([
     transforms.Normalize([0.5,0.5,0.5],[0.5,0.5,0.5])
 ])
 
-# ------------------- Flask App -------------------
+#  Flask App
 app = Flask(__name__)
 
 camera = None
@@ -66,7 +66,7 @@ face_track = {}
 face_id_counter = 0
 running = False
 
-# ------------------- Helper Functions -------------------
+# Helper Functions 
 def get_face_id(face_bbox):
     global face_track, face_id_counter
     x, y, w, h = face_bbox
@@ -81,7 +81,7 @@ def get_face_id(face_bbox):
     face_id_counter += 1
     return fid
 
-# ------------------- Video Generator -------------------
+# Video Generator 
 def gen_frames():
     global face_track
     while camera is not None:
@@ -129,7 +129,7 @@ def gen_frames():
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
 
-# ------------------- Flask Routes -------------------
+#  Flask Routes 
 @app.route('/')
 def index():
     return render_template('index.html')  # create index.html in templates folder
@@ -178,6 +178,6 @@ def stop_stream():
         "Not Interested": f"{not_interested_pct:.2f}%"
     })
 
-# ------------------- Run App -------------------
+#  Run App 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000, debug=True)
