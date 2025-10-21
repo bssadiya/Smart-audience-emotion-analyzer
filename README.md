@@ -5,8 +5,6 @@ Real-time audience emotion tracking and engagement feedback
 
 A web application to detect emotions from live webcam feed, classify users as **Interested** or **Not Interested**, and provide real-time summaries.
 
----
-
 ## Features
 
 - Real-time face detection using OpenCV Haar cascades.
@@ -17,14 +15,10 @@ A web application to detect emotions from live webcam feed, classify users as **
 - Displays live video with bounding boxes and emotion/interest labels.
 - Computes overall percentage of **Interested** and **Not Interested** users on stop.
 
----
-
 ## Demo
 
 - Start camera → live emotion overlay.
 - Stop camera → get final summary percentages.
-
----
 
 ## Requirements
 
