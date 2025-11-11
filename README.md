@@ -20,7 +20,7 @@ The system provides instant feedback through the browser interface and also give
 • Start and Stop buttons to control the camera and generate a summary report.
 • Saves a detailed evaluation report with model accuracy and per-class results.
 
----
+
 
 **Emotion Classes and Mapping:**
 The model predicts seven different emotions and maps them into interest levels as follows:
@@ -32,8 +32,6 @@ The model predicts seven different emotions and maps them into interest levels a
 5. Happy → Interested
 6. Neutral → Interested
 7. Surprise → Interested
-
----
 
 **Model Details:**
 • Base Model: ResNet18 pre-trained on ImageNet
@@ -61,7 +59,7 @@ Multimedia
 ├── train_reduced (Balanced training dataset)
 └── test (Testing dataset)
 
----
+
 
 **Steps to Run the Project:**
 
