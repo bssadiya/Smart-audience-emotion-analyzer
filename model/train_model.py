@@ -1,7 +1,3 @@
-# ==============================================================
-# train.py → Emotion Detection Training (Balanced Dataset)
-# Dynamic Augmentation + Fine-Tuned ResNet18
-# ==============================================================
 
 import torch
 import torch.nn as nn
@@ -10,9 +6,8 @@ from torchvision import datasets, transforms, models
 from torch.utils.data import DataLoader
 import os
 
-# ==============================================================
-# 1️⃣ Dataset & Dataloader
-# ==============================================================
+#  Dataset & Dataloader
+
 
 data_dir = r"C:\Users\bssad\Pictures\Projects\Multimedia\images\dataset\train_reduced"
 
@@ -29,12 +24,12 @@ transform = transforms.Compose([
 dataset = datasets.ImageFolder(root=data_dir, transform=transform)
 dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
 
-print(f"✅ Loaded balanced dataset with {len(dataset)} images across {len(dataset.classes)} classes.")
+print(f" Loaded balanced dataset with {len(dataset)} images across {len(dataset.classes)} classes.")
 print("Class mapping:", dataset.class_to_idx)
 
-# ==============================================================
-# 2️⃣ Model Setup (Fine-Tuned ResNet18)
-# ==============================================================
+
+#  Model Setup (Fine-Tuned ResNet18)
+
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_classes = 7
@@ -56,11 +51,11 @@ model = model.to(device)
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(filter(lambda p: p.requires_grad, model.parameters()), lr=1e-4)
-num_epochs = 1
+num_epochs = 10
 
-# ==============================================================
-# 3️⃣ Training Loop
-# ==============================================================
+
+#  Training Loop
+
 
 for epoch in range(num_epochs):
     model.train()
@@ -84,13 +79,14 @@ for epoch in range(num_epochs):
             print(f"Epoch [{epoch+1}/{num_epochs}] | Batch [{batch_idx+1}/{len(dataloader)}] "
                   f"| Loss: {loss.item():.4f} | Accuracy: {100*correct/total:.2f}%")
 
-    print(f"✅ Epoch [{epoch+1}] Complete | Avg Loss: {running_loss/len(dataloader):.4f} "
+    print(f" Epoch [{epoch+1}] Complete | Avg Loss: {running_loss/len(dataloader):.4f} "
           f"| Epoch Accuracy: {100*correct/total:.2f}%\n")
 
-# ==============================================================
-# 4️⃣ Save Trained Model
-# ==============================================================
+
+#  Save Trained Model
+
 
 os.makedirs("model", exist_ok=True)
 torch.save(model.state_dict(), "model/emotion_cnn.pth")
-print("🎯 Model trained and saved at model/emotion_cnn.pth")
+print("Model trained and saved at model/emotion_cnn.pth")
+
