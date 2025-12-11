@@ -1,13 +1,9 @@
-Here is a **clean, aesthetic, modern GitHub-style README** — no emojis, but with beautiful spacing, visual hierarchy, and professional formatting.
-You can paste this directly into your repository.
-
----
 
 # Real-Time Emotion & Interest Detection System
 
 *A deep learning system that measures audience engagement in real time.*
 
----
+
 
 ## 1. Overview
 
@@ -22,10 +18,6 @@ To answer this, the system uses a combination of **Flask**, **PyTorch**, **OpenC
 * Display results live through a browser interface
 * Provide a final engagement summary at the end of the session
 
-This creates a seamless way to measure attention and involvement during classes, presentations, training sessions, and live events.
-
----
-
 ## 2. Dataset
 
 The model is trained on a balanced dataset with:
@@ -35,8 +27,6 @@ The model is trained on a balanced dataset with:
 * Augmentation techniques such as rotation, flip, jitter, and affine transforms
 
 This ensures strong performance in varied lighting and real-time conditions.
-
-
 
 ## 3. Approach
 
@@ -65,11 +55,9 @@ This ensures strong performance in varied lighting and real-time conditions.
 
 * After stopping the stream, the system calculates the percentage distribution of Interested vs Not Interested participants.
 
----
-
 ## 4. Results
 
-* Model accuracy: **80–85%**
+* Model accuracy: **75%**
 * Strong multi-face detection and tracking
 * Consistent performance across different lighting and facial orientations
 * Example summary output:
@@ -79,17 +67,11 @@ This ensures strong performance in varied lighting and real-time conditions.
 
 The evaluation report also provides class-wise accuracy and overall performance metrics.
 
----
-
 ## 5. Demo
 
 ```
-![Demo](demo.gif)
+![Demo](Output.dox)
 ```
-
-(Replace the file after uploading your GIF.)
-
----
 
 ## 6. Project Structure
 
