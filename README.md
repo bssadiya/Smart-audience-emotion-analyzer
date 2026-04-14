@@ -1,129 +1,184 @@
+# Smart Audience Emotion Analyzer
 
-# Real-Time Emotion & Interest Detection System
+##  Overview
 
-*A deep learning system that measures audience engagement in real time.*
+Smart Audience Emotion Analyzer is an AI-powered system that detects human emotions in real-time using facial expressions and converts them into meaningful engagement insights such as **“Interested”** and **“Not Interested.”**
 
+This project combines **Computer Vision**, **Deep Learning**, and **Web Deployment** to create an end-to-end intelligent system that can be used in classrooms, presentations, and business environments.
 
+---
 
-## 1. Overview
+##  Features
 
-This project began with a simple question:
-**How can we understand audience engagement without asking them to speak?**
+*  Real-time face detection using MTCNN
+*  Emotion recognition using ResNet18 (Deep Learning)
+*  Multi-face detection and batch processing
+*  Face tracking across frames
+*  Emotion → Engagement mapping (Interested / Not Interested)
+*  Live video streaming using Flask
+*  Final audience analytics (percentage output)
 
-To answer this, the system uses a combination of **Flask**, **PyTorch**, **OpenCV**, **MTCNN**, and a fine-tuned **ResNet18** model to:
+---
 
-* Detect multiple faces from a webcam stream
-* Classify seven human emotions
-* Convert those emotions into two categories: *Interested* or *Not Interested*
-* Display results live through a browser interface
-* Provide a final engagement summary at the end of the session
+##  Tech Stack
 
-## 2. Dataset
+###  Computer Vision
 
-The model is trained on a balanced dataset with:
+* OpenCV → video capture & image processing
 
-* Seven emotion classes
-* 2000 images per class
-* Augmentation techniques such as rotation, flip, jitter, and affine transforms
+###  Deep Learning
 
-This ensures strong performance in varied lighting and real-time conditions.
+* PyTorch → model development
+* ResNet18 → emotion classification
 
-## 3. Approach
+###  Face Detection
 
-**Face Detection**
+* MTCNN → robust multi-face detection
 
-* MTCNN is used to detect multiple faces accurately in each frame.
+###  Backend
 
-**Preprocessing**
+* Flask → web server & streaming
 
-* Detected faces are cropped, resized to 128×128, normalized, and transformed.
+###  Data Handling
 
-**Emotion Classification**
+* NumPy, Collections → analytics & tracking
 
-* A ResNet18 model fine-tuned on emotion data predicts one of seven classes.
+---
 
-**Interest Mapping**
-
-* Happy, Neutral, Surprise → Interested
-* Angry, Disgust, Fear, Sad → Not Interested
-
-**Live Rendering**
-
-* Flask delivers real-time bounding boxes and emotion/interest labels to the browser.
-
-**Session Summary**
-
-* After stopping the stream, the system calculates the percentage distribution of Interested vs Not Interested participants.
-
-## 4. Results
-
-* Model accuracy: **75%**
-* Strong multi-face detection and tracking
-* Consistent performance across different lighting and facial orientations
-* Example summary output:
-
-  * Interested: 72.40%
-  * Not Interested: 27.60%
-
-The evaluation report also provides class-wise accuracy and overall performance metrics.
-
-## 5. Demo
+##  Project Architecture
 
 ```
-![Demo](Output.dox)
+Camera Input
+     ↓
+Frame Capture (OpenCV)
+     ↓
+Face Detection (MTCNN)
+     ↓
+Preprocessing (Resize, Normalize)
+     ↓
+Emotion Prediction (ResNet18)
+     ↓
+Emotion Mapping (Interested / Not Interested)
+     ↓
+Face Tracking + Majority Voting
+     ↓
+Final Analytics (Percentage Output)
 ```
 
-## 6. Project Structure
+---
+
+##  Installation
+
+### 1. Clone Repository
 
 ```
-app.py                     # Flask application
-train.py                   # Model training
-evaluate.py                # Model evaluation
-model/
-    emotion_cnn.pth        # Trained model
-    model_evaluation_report.txt
-templates/
-    index.html             # Web interface
-dataset/
-    train_reduced
-    test
+git clone https://github.com/your-username/smart-audience-emotion-analyzer.git
+cd smart-audience-emotion-analyzer
 ```
 
-## 7. How to Run
-
-**Step 1. Install dependencies**
+### 2. Install Dependencies
 
 ```
-pip install torch torchvision facenet-pytorch opencv-python scikit-learn flask Pillow numpy
+pip install -r requirements.txt
 ```
 
-**Step 2. Train the model**
+### 3. Add Trained Model
+
+Place your trained model file:
 
 ```
-python train.py
+emotion_cnn.pth
 ```
 
-**Step 3. Evaluate the model**
+inside:
 
 ```
-python evaluate.py
+/model/
 ```
 
-**Step 4. Start the application**
+---
+
+##  Run the Project
+
+```
 python app.py
+```
 
-**Step 5. Open the browser**
+Then open:
+
 ```
 http://127.0.0.1:5000
 ```
 
-Click **Start** to begin the live detection, and **Stop** to view the engagement summary.
+---
+
+##  How It Works
+
+1. Webcam captures live video
+2. MTCNN detects faces in each frame
+3. Faces are preprocessed and passed to ResNet18
+4. Model predicts emotions (happy, sad, etc.)
+5. Emotions are mapped to engagement levels
+6. Faces are tracked across frames
+7. Final output shows audience engagement percentage
+
+---
+
+##  Emotion Mapping Logic
+
+| Emotion  | Engagement     |
+| -------- | -------------- |
+| Happy    | Interested     |
+| Surprise | Interested     |
+| Neutral  | Interested     |
+| Sad      | Not Interested |
+| Angry    | Not Interested |
+| Fear     | Not Interested |
+| Disgust  | Not Interested |
+
+---
+
+##  Model Details
+
+* Model: ResNet18
+* Framework: PyTorch
+* Input Size: 128 × 128
+* Output Classes: 7 emotions
+* Loss Function: CrossEntropyLoss
+* Optimizer: Adam
+
+---
+
+##  Key Innovations
+
+*  Uses **ResNet (skip connections)** for better accuracy
+*  Batch processing of multiple faces for speed
+*  Majority voting per face for stable predictions
+*  Converts raw emotions into **business insights**
+
+---
 
 
 
-## 8. Conclusion
+---
 
-This system combines deep learning and computer vision to provide a meaningful and practical measure of audience engagement.
-By interpreting emotions and mapping them into interest levels, it offers real-time insights that can support educators, presenters, and anyone who depends on audience feedback.
+##  Future Improvements
+
+*  Dashboard for analytics visualization
+*  Voice-based emotion detection
+*  Deploy as web/mobile application
+*  Use advanced models (ResNet50, EfficientNet)
+*  Temporal emotion tracking (video-based trends)
+
+---
+
+##  Use Cases
+
+*  Classroom engagement monitoring
+*  Business presentations
+*  Customer reaction analysis
+*  Mental health monitoring
+
+---
 
 
